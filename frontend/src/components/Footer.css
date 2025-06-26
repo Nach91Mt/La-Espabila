@@ -1,0 +1,6 @@
+.list-group,
+.list-group-item {
+  background-color: #212529 !important; /* Bootstrap 'bg-dark' color */
+  color: #f8f9fa !important; /* Bootstrap 'text-light' color */
+  border-color: #343a40 !important; /* Opcional: bordes más oscuros */
+}

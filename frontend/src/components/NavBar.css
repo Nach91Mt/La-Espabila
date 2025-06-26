@@ -1,0 +1,10 @@
+@media (max-width: 991.98px) {
+  .collapse-left {
+    width: 100%;
+    text-align: left;
+  }
+
+  .collapse-left .navbar-nav {
+    align-items: flex-start;
+  }
+}
