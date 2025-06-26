@@ -16,6 +16,7 @@ def create_app():
     jwt= JWTManager(app)
     app.config['JWT_SECRET_KEY'] = os.getenv("KEY")
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
+    
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     db.init_app(app)
     migrate = Migrate(app, db)
