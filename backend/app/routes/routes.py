@@ -4,7 +4,6 @@ from app.models import User,Food, Section
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity
-from flask_jwt_extended import jwt_required, get_jwt_identity
 main = Blueprint("main", __name__)
 
 @main.route("/api/hello")

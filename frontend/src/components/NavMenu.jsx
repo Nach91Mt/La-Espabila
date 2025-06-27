@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 export default function NavMenu() {
   const [expanded, setExpanded] = useState(false);
 
@@ -20,12 +21,14 @@ export default function NavMenu() {
           >
             {expanded ? <FaTimes color="white" /> : <FaBars color="white" />}
           </Navbar.Toggle>
-
+          {/*solucionar posicion delñ titulo*/}
           <Navbar.Brand
-            href="/"
-            className="position-absolute top-50 start-50 translate-middle"
+            as={Link}
+            to="/"
+            className="mx-auto position-absolute start-50 translate-middle-x"
+            style={{ zIndex: 1 }}
           >
-            MyApp
+            <h1 className="text-center text-white m-0">La Espabila</h1>
           </Navbar.Brand>
 
           <Navbar.Collapse
@@ -33,9 +36,9 @@ export default function NavMenu() {
             className="justify-content-start"
           >
             <Nav className="me-auto" onClick={() => setExpanded(false)}>
-              <Nav.Link href="/">Carta</Nav.Link>
-              <Nav.Link href="/about">Trabaja con nosotros</Nav.Link>
-              <Nav.Link href="/contact">Contacto</Nav.Link>
+              <Nav.Link as={Link} to="/menu-comida">Carta</Nav.Link>
+              <Nav.Link as={Link} href="/contact">Contacto</Nav.Link>
+              <Nav.Link as={Link} href="/about">Trabaja con nosotros</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

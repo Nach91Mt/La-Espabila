@@ -1,6 +1,7 @@
 import { Col, Container, Row, ListGroup } from "react-bootstrap";
 import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+
 import "./Footer.css"; // Assuming you have a CSS file for additional styles
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
       <Container className="mx-auto pt-3" fluid>
         <Row className="g-4">
           <Col md={4}>
-            <h3 className="mb-3 fs-5 fw-semibold text-center">Lola Puñales</h3>
+            <h3 className="mb-3 fs-5 fw-semibold text-center">La Espabila</h3>
             <p className="mb-3 text-white text-center">
               Ofreciendo la mejor experiencia gastronómica desde 2010. Nuestro
               compromiso es con la calidad y el sabor auténtico.
@@ -36,9 +37,7 @@ export default function Footer() {
           </Col>
 
           <Col md={4} className="bg-dark">
-            <h3 className="mb-3 fs-5 fw-semibold text-center">
-              Enlaces Rápidos
-            </h3>
+            <h3 className="mb-3 fs-5 fw-semibold text-center">Enlaces</h3>
             <ListGroup variant="flush">
               <ListGroup.Item className="p-0 border-0 text-center">
                 <a href="/" className="text-light text-decoration-none">
@@ -102,7 +101,7 @@ export default function Footer() {
 
         <div className="mt-2 border-top pt-3 text-center text-light small">
           <p>
-            &copy; {new Date().getFullYear()} Lola Puñales. Todos los derechos
+            &copy; {new Date().getFullYear()} La Espabila. Todos los derechos
             reservados.
           </p>
         </div>
