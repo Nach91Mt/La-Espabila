@@ -1,5 +1,6 @@
 import { Container } from "react-bootstrap";
-import logo from "../assets/logo.png"; // Adjust the path as necessary
+import logo from "../assets/logo.png";
+
 export default function Home() {
   return (
     <Container

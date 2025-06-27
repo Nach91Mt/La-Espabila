@@ -5,13 +5,16 @@ import NavMenu from "./NavMenu";
 
 export default function Layout() {
   return (
-    <div className="d-flex flex-column min-vh-100 bg-dark text-light " fluid>
-      <NavMenu />
-
-      <div className="flex-grow-1">
-        <Outlet />
+    <>
+      <header className="bg-dark text-light border-bottom border-secondary">
+        <NavMenu />
+      </header>
+      <div className="d-flex flex-column min-vh-100 bg-dark text-light ">
+        <div className="flex-grow-1">
+          <Outlet />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
