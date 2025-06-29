@@ -1,5 +1,5 @@
 from .database import db
-
+import json
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -30,25 +30,35 @@ class Food(db.Model):
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(200), nullable=True)
     price = db.Column(db.Float, nullable=False)
-    allergens = db.Column(db.String(200), nullable=True)
+    allergens = db.Column(db.Text, nullable=True)  
     section_id = db.Column(db.Integer, db.ForeignKey('section.id'), nullable=False)
 
     def serialize(self):
+        try:
+            allergens = json.loads(self.allergens) if self.allergens else []
+        except json.JSONDecodeError:
+            allergens = []  # En caso de string vacío o inválido
+
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "section_id": self.section_id,
             "price": self.price,
-            "allergens": self.allergens,
-        }
+            "allergens": allergens,
+            "section_id": self.section_id
+    }
+
+    def set_allergens(self, allergen_list):
+        self.allergens = json.dumps(allergen_list)
 class ImgCarousel(db.Model):
     __tablename__ = 'imgcarousel'
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(200), nullable=False)
+    position = db.Column(db.Integer, nullable=False, default=0)
 
     def serialize(self):
         return {
             "id": self.id,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "position": self.position
         }
