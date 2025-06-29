@@ -21,12 +21,12 @@ export default function Layout() {
       );
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
-        // dispatch({ type: "SET_SECTIONS", payload: data });
+        
+        dispatch({ type: "SET_MENU", payload: data });
       }
     };
     fetchSections();
-  }, [store]);
+  }, []);
   return (
     <>
       <header className="bg-dark text-light border-bottom border-secondary">
