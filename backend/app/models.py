@@ -39,6 +39,8 @@ class Food(db.Model):
             "name": self.name,
             "description": self.description,
             "section_id": self.section_id,
+            "price": self.price,
+            "allergens": self.allergens,
         }
 class ImgCarousel(db.Model):
     __tablename__ = 'imgcarousel'

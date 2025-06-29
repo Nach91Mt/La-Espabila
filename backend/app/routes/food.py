@@ -6,7 +6,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 food_bp = Blueprint("food_bp", __name__)
 
 @food_bp.route("/api/add_food", methods=["POST"])
-@jwt_required()
 def add_food():
     data = request.get_json()
     section_name = data.get("section_name")
@@ -14,9 +13,8 @@ def add_food():
     description = data.get("description")
     price = data.get("price")
     alergens = data.get("allergens")
-    image_url = data.get("image_url")
 
-    if not name or not price  or not section_name or not alergens:
+    if not name or not price  or not section_name :
         return {"error": "Faltan campos obligatorios"}, 400
     
     section = Section.query.filter_by(name=section_name).first()
@@ -24,7 +22,7 @@ def add_food():
         section = Section(name=section_name)
         db.session.add(section)
         db.session.flush()
-    new_food = Food(name=name, description=description, price=price, image_url=image_url,section_id=section.id, allergens=alergens) 
+    new_food = Food(name=name, description=description, price=price,section_id=section.id, allergens=alergens) 
     db.session.add(new_food)
     db.session.commit()
 
