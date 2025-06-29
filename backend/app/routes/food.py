@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from app.database import db
 from app.models import User,Food, Section
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import json
 
 food_bp = Blueprint("food_bp", __name__)
 
@@ -12,7 +13,7 @@ def add_food():
     name = data.get("name")
     description = data.get("description")
     price = data.get("price")
-    alergens = data.get("allergens")
+    allergens = data.get("allergens")
 
     if not name or not price  or not section_name :
         return {"error": "Faltan campos obligatorios"}, 400
@@ -22,7 +23,13 @@ def add_food():
         section = Section(name=section_name)
         db.session.add(section)
         db.session.flush()
-    new_food = Food(name=name, description=description, price=price,section_id=section.id, allergens=alergens) 
+    new_food = Food(
+        name=name, 
+        description=description, 
+        price=price,
+        section_id=section.id, 
+        allergens=json.dumps(allergens) if allergens else "[]"
+        ) 
     db.session.add(new_food)
     db.session.commit()
 
