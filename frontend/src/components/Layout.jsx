@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function Layout() {
   const { store, dispatch } = useGlobalReducer();
-
+  
   useEffect(() => {
     const fetchSections = async () => {
       const response = await fetch(

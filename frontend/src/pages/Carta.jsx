@@ -3,7 +3,9 @@ import AllergensData from "../components/alergensData";
 import useGlobalReducer from "../components/hooks/useGlobalReducer";
 import { Button } from "react-bootstrap";
 import ModalProduct from "../components/ModalProduct";
-
+import CarouselFood from "../components/CarouselFood";
+import '../components/CarouselFood.css';
+import "../pages/Carta.css"; // Import your CSS file for styling
 export default function Carta() {
   const { store, dispatch } = useGlobalReducer();
   const [modalShow, setModalShow] = useState(false);
@@ -23,6 +25,8 @@ export default function Carta() {
 
   return (
     <>
+      <CarouselFood />
+      <div className="menu-container">
       {store?.menu?.length > 0 ? (
         store.menu.map((section) => (
           <div
@@ -46,11 +50,13 @@ export default function Carta() {
                 </div>
               </div>
             ))}
+            
           </div>
         ))
       ) : (
         <p className="text-light">Cargando menú...</p>
-      )}
+        )}
+        </div>
       <Button
         variant="primary"
         className="position-fixed bottom-0 end-0 m-3"

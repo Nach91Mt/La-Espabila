@@ -1,0 +1,17 @@
+/* Solo para pantallas menores o iguales a 768px (mobile) */
+@media (max-width: 768px) {
+  .fixed-mobile {
+    position: fixed !important;
+    width: 100% !important;
+    z-index: 9998 !important;
+    bottom: auto; /* si quieres, ajusta top o bottom */
+    top: 0;
+  }
+}
+
+/* Para pantallas mayores que 768px, que no tenga posición fija */
+@media (min-width: 769px) {
+  .fixed-mobile {
+    position: static !important;
+  }
+}

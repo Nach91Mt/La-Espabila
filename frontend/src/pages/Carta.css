@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+  .menu-container {
+    padding-top: 300px; /* ajusta según altura del carrusel */
+  }
+}
