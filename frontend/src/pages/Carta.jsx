@@ -7,19 +7,15 @@ import CarouselFood from "../components/CarouselFood";
 import '../components/CarouselFood.css';
 import "../pages/Carta.css"; // Import your CSS file for styling
 export default function Carta() {
-  const { store, dispatch } = useGlobalReducer();
+  const { store } = useGlobalReducer();
   const [modalShow, setModalShow] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const[product, setProduct] = useState("");
   console.log(store);
-  const handleOpenModal = (product) => {
-    setSelectedProduct(product);
+  const handleOpenModal = () => {
     setModalShow(true);
   };
-
   const handleCloseModal = () => {
     setModalShow(false);
-    setSelectedProduct(null);
     setProduct("");
   };
 
@@ -40,7 +36,7 @@ export default function Carta() {
                   <h5 className="card-title">{food.name}</h5>
                   <p className="card-text">{food.description}</p>
                   <p className="card-text">
-                    <small className="text-muted">Precio: ${food.price}</small>
+                    <small className="text-muted">Precio: {food.price}€</small>
                   </p>
                 </div>
                 <div className="card-footer">

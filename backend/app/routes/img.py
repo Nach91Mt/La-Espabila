@@ -15,26 +15,36 @@ def get_images():
 
 @img_bp.route("/api/upload_image", methods=["POST"])
 def upload_image():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No se encontró ninguna imagen'}), 400
-    if('position' not in request.form):
-        return jsonify({'error': 'No se encontró la posición de la imagen'}), 400
-    image_file = request.files['image']
+    images = request.files.getlist("images")  # 'images' = mismo nombre del frontend
+    saved_files = []
+    print(f"Received {len(images)} images for upload")
+    if not images:
+        return jsonify({'error': 'No se recibieron imágenes'}), 400
 
     try:
-        # Subir imagen a Cloudinary
-        result = cloudinary.uploader.upload(image_file)
-        image_url = result.get('secure_url')
-        public_id = result.get('public_id')
+        # Obtener la última posición y sumarle 1 para ir en orden
+        last = db.session.query(db.func.max(ImgCarousel.position)).scalar() or 0
+        current_position = last + 1
 
-        # Guardar la URL en la base de datos
-        new_image = ImgCarousel(image_url=image_url,public_id=public_id, position=0)  # Puedes ajustar la posición según sea necesario
-        db.session.add(new_image)
+        for img in images:
+            result = cloudinary.uploader.upload(img)
+            image_url = result.get('secure_url')
+            public_id = result.get('public_id')
+
+            new_image = ImgCarousel(
+                image_url=image_url,
+                public_id=public_id,
+                position=current_position
+            )
+            db.session.add(new_image)
+            saved_files.append(image_url)
+            current_position += 1  # Incrementa para la siguiente
+
         db.session.commit()
-
-        return jsonify({'message': 'Imagen subida con éxito', 'url': image_url})
+        return jsonify({'message': 'Imágenes subidas con éxito', 'urls': saved_files}), 200
 
     except Exception as e:
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
 @img_bp.route("/api/delete_image/<int:image_id>", methods=["DELETE"])
 def delete_image(image_id):

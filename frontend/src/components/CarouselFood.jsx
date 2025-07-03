@@ -1,22 +1,29 @@
-import { Carousel, Image } from "react-bootstrap";
+import { Carousel, Image, Ratio } from "react-bootstrap";
 import '../components/CarouselFood.css';
+import useGlobalReducer from "./hooks/useGlobalReducer";
 export default function CarouselFood() {
+  const { imgStore } = useGlobalReducer()
   return (
     <div className="mb-3 fixed-mobile" >
       <Carousel>
-        <Carousel.Item>
-          <Image
-            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"
-            alt="First slide"
-            className="d-block w-100"
-            
-          />
-
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
+        {imgStore?.images?.length > 0 ? (
+          imgStore.images.map((image, index) => (
+            <Carousel.Item key={index}>
+              <Ratio aspectRatio="16x9" className="ratio-container">
+              <Image
+                src={image.image_url}
+                alt={`Slide ${index + 1}`}
+                  className="d-block w-100"
+                  
+                />
+                </Ratio>
+              
+            </Carousel.Item>
+          ))
+        ) : (
+          <p className="text-light">Cargando imágenes...</p>
+        )}
+       
         {/* <Carousel.Item>
           <Carousel.Caption>
             <h3>Second slide label</h3>
