@@ -6,8 +6,8 @@ import useGlobalReducer from "./hooks/useGlobalReducer";
 import { useEffect } from "react";
 
 export default function Layout() {
-  const { store, dispatch } = useGlobalReducer();
-
+  const {  dispatch, imgDispatch } = useGlobalReducer();
+  
   useEffect(() => {
     const fetchSections = async () => {
       const response = await fetch(
@@ -25,6 +25,23 @@ export default function Layout() {
         dispatch({ type: "SET_MENU", payload: data });
       }
     };
+    const fetchImages = async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACK_URL}/api/get_images`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        const data = await response.json();
+        
+        imgDispatch({ type: "SET_IMAGES", payload: data });
+      }
+    };
+    fetchImages();
     fetchSections();
   }, []);
   return (

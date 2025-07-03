@@ -55,7 +55,7 @@ class ImgCarousel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(200), nullable=False)
     public_id = db.Column(db.String(200), nullable=False)
-    position = db.Column(db.Integer, nullable=False, default=0)
+    position = db.Column(db.Integer , nullable=False, default=0)
 
     def serialize(self):
         return {
