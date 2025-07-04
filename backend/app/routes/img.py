@@ -37,7 +37,7 @@ def upload_image():
                 position=current_position
             )
             db.session.add(new_image)
-            saved_files.append(image_url)
+            saved_files.append(new_image.serialize())
             current_position += 1  # Incrementa para la siguiente
 
         db.session.commit()

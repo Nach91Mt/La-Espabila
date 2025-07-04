@@ -3,6 +3,7 @@ import '../components/CarouselFood.css';
 import useGlobalReducer from "./hooks/useGlobalReducer";
 export default function CarouselFood() {
   const { imgStore } = useGlobalReducer()
+  console.log(imgStore);
   return (
     <div className="mb-3 fixed-mobile" >
       <Carousel>

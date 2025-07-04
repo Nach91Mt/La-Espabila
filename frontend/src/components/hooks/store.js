@@ -14,10 +14,22 @@ export const initialImgStore = {
     images: null
 }
 export function imgStoreReducer(imgStore, action) {
-    switch (action.type) {
-        case "SET_IMAGES":
-            return { ...imgStore, images: action.payload };
-        default:
-            return imgStore;
-    }
+  switch (action.type) {
+    case "SET_IMAGES":
+      return { ...imgStore, images: action.payload };
+
+    case "ADD_IMAGES":
+      return {
+        ...imgStore,
+        images: imgStore.images
+          ? [...imgStore.images, ...action.payload]
+          : [...action.payload],
+      };
+    case "DELETE_ALL_IMAGES":
+      return { ...imgStore, images: null };
+    
+
+    default:
+      return imgStore;
+  }
 }
