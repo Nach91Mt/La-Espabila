@@ -34,6 +34,46 @@ def add_food():
     db.session.commit()
 
     return {"message": "Comida añadida exitosamente", "food": new_food.serialize()}
+@food_bp.route("/api/add_food/<string:section>", methods=["POST"])
+def add_food_to_section(section):
+    data = request.get_json()
+    name = data.get("name")
+    description = data.get("description")
+    price = data.get("price")
+    allergens = data.get("allergens")
+
+    if not name or not price:
+        return {"error": "Faltan campos obligatorios"}, 400
+    
+    section_obj = Section.query.filter_by(name=section).first()
+    if not section_obj:
+        return {"error": "Sección no encontrada"}, 404
+
+    new_food = Food(
+        name=name, 
+        description=description, 
+        price=price,
+        section_id=section_obj.id, 
+        allergens=json.dumps(allergens) if allergens else "[]"
+    )
+    
+    db.session.add(new_food)
+    db.session.commit()
+
+    return {"message": "Comida añadida exitosamente", "food": new_food.serialize()}
+@food_bp.route('/api/add_section', methods=['POST'])
+def add_section():
+    data = request.get_json()
+    name = data.get("name")
+
+    if not name:
+        return {"error": "El nombre de la sección es obligatorio"}, 400
+
+    new_section = Section(name=name)
+    db.session.add(new_section)
+    db.session.commit()
+
+    return {"message": "Sección añadida exitosamente", "section": new_section.serialize()}, 201
 @food_bp.route("/api/sections", methods=["GET"])
 def get_sections():
     sections = Section.query.all()
