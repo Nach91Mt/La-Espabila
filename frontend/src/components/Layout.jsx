@@ -43,7 +43,7 @@ export default function Layout() {
     };
     fetchImages();
     fetchSections();
-  }, []);
+  }, [dispatch, imgDispatch]);
   return (
     <>
       <header className="bg-dark text-light border-bottom border-secondary">
