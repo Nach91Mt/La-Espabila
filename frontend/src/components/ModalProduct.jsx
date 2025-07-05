@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import useGlobalReducer from "./hooks/useGlobalReducer";
 
 export default function ModalProduct({ product, show, onHide, section }) {
@@ -74,13 +74,15 @@ export default function ModalProduct({ product, show, onHide, section }) {
     e.preventDefault();
   };
   const handleDeleteAll = async () => {
-    const response = await fetch(`${import.meta.env.VITE_BACK_URL}/api/delete_all_image`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-     
-    })
+    const response = await fetch(
+      `${import.meta.env.VITE_BACK_URL}/api/delete_all_image`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (response.status === 200) {
       imgDispatch({ type: "DELETE_ALL_IMAGES" });
       alert("Todas las imágenes han sido eliminadas");
@@ -90,7 +92,27 @@ export default function ModalProduct({ product, show, onHide, section }) {
       console.error("Error al eliminar las imágenes:", errorData);
       alert("Error al eliminar las imágenes", errorData.error);
     }
-  }
+  };
+  const handleDeleteImage = async (id) => {
+    console.log(id);
+    const response = await fetch(
+      `${import.meta.env.VITE_BACK_URL}/api/delete_image/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 200) {
+      // imgDispatch({ type: "DELETE_IMAGE", payload: id });
+      alert("Imagen eliminada con éxito");
+    } else {
+      const errorData = await response.json();
+      console.error("Error al eliminar la imagen:", errorData);
+      alert("Error al eliminar la imagen", errorData.error);
+    }
+  };
   return (
     <>
       {product === "carousel" && (
@@ -132,23 +154,38 @@ export default function ModalProduct({ product, show, onHide, section }) {
                 <div className="mt-3">
                   <h5>Imágenes subidas:</h5>
                   {imgStore.images.map((img, index) => (
-                    <img
-                      key={index}
-                      src={img.image_url}
-                      alt={`uploaded-${index}`}
-                      style={{ maxWidth: "100px", marginRight: "8px" }}
-                    />
+                    <>
+                      <img
+                        key={index}
+                        src={img.image_url}
+                        alt={`uploaded-${index}`}
+                        style={{ maxWidth: "100px", marginRight: "8px" }}
+                      />
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          handleDeleteImage(img.id);
+                        }}
+                        className="ms-2"
+                      >
+                        X
+                      </Button>
+                    </>
                   ))}
                 </div>
               )}
             </Form>
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-between">
-            <button className="btn btn-danger" onClick={() => handleDeleteAll()}>Eliminar todas las imágenes</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDeleteAll()}
+            >
+              Eliminar todas las imágenes
+            </button>
             <button className="btn btn-primary" onClick={handleUpload}>
               Subir Imagen
             </button>
-            
           </Modal.Footer>
         </Modal>
       )}
